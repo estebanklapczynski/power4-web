@@ -13,4 +13,3 @@ func main() {
 	fmt.Println("Serveur démarré sur le port 8080...")
 	http.ListenAndServe(":8080", nil)
 }
-d
