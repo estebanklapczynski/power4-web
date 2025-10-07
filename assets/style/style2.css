@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body {
+
+body {
       background-image: url('background_power4.png');
       background-position: center;
       background-size: cover;
@@ -17,9 +14,4 @@
       p {
         color: blanchedalmond;
       }
-    }
-  </style>
-</head>
-<body>
-</body>
-</html>
+}
