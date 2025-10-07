@@ -1,15 +1,44 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
+	"log"
 	"net/http"
+	"strconv"
+
+	"power4-web/game"
 )
 
-func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Bienvenue sur mon serveur Go !")
-	})
+var new_game *game.Game
 
-	fmt.Println("Serveur démarré sur le port 8080...")
-	http.ListenAndServe(":8080", nil)
+func main() {
+	new_game = game.NewGame()
+
+	http.HandleFunc("/", handleIndex)
+	http.HandleFunc("/play", handlePlay)
+	http.HandleFunc("/reset", handleReset)
+
+	log.Println("Serveur lancé sur http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl.Execute(w, new_game)
+}
+
+func handlePlay(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		colStr := r.FormValue("column")
+		col, err := strconv.Atoi(colStr)
+		if err == nil {
+			new_game.PlayMove(col) // Correction ici
+		}
+	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func handleReset(w http.ResponseWriter, r *http.Request) {
+	new_game = game.NewGame() // Correction ici
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
