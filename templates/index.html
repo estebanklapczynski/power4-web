@@ -1,26 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connect 4 Web</title>
+    <title>Puissance 4 Web</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        table { margin: auto; border-collapse: collapse; cursor: pointer; }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            cursor: pointer;
+        }
         td {
             width: 70px;
             height: 70px;
-            border: 3px solid #000000;
+            border: 3px solid #333;
             border-radius: 50%;
             background-color: #e0e0e0;
+            padding: 0;
+            margin: 0;
+            position: relative;
         }
-        .p1 { background-color: rgb(240, 25, 136); }
-        .p2 { background-color: rgb(6, 104, 12); }
-        h2 { margin: 20px; }
-        .board-container { display: inline-block; position: relative; }
+        .p1 { background-color: red; }
+        .p2 { background-color: yellow; }
+
+        /* Bouton invisible qui recouvre exactement chaque cellule */
+        form {
+            margin: 0;
+            padding: 0;
+        }
         .col-button {
             position: absolute;
             top: 0;
-            width: 70px;
+            left: 0;
+            width: 100%;
             height: 100%;
             background: transparent;
             border: none;
@@ -29,13 +44,21 @@
         .col-button:hover {
             background: rgba(0,0,0,0.1);
         }
+
+        button:focus {
+            outline: none;
+        }
+
+        h2 {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Puissance 4</h1>
 
     {{if .Winner}}
-        <h2> Joueur {{.Winner}} a gagné !</h2>
+        <h2>🎉 Joueur {{.Winner}} a gagné !</h2>
         <form action="/reset" method="post">
             <button type="submit">Rejouer</button>
         </form>
@@ -43,21 +66,19 @@
         <h2>Tour du Joueur {{.CurrentPlayer}}</h2>
     {{end}}
 
-    <div class="board-container">
-        <table>
-            {{range $i, $row := .Board}}
-            <tr>
-                {{range $j, $cell := $row}}
-                    <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
-                        <form action="/play" method="post">
-                            <input type="hidden" name="column" value="{{$j}}">
-                            <button type="submit" class="col-button"></button>
-                        </form>
-                    </td>
-                {{end}}
-            </tr>
+    <table>
+        {{range $i, $row := .Board}}
+        <tr>
+            {{range $j, $cell := $row}}
+                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
+                    <form action="/play" method="post">
+                        <input type="hidden" name="column" value="{{$j}}">
+                        <button type="submit" class="col-button"></button>
+                    </form>
+                </td>
             {{end}}
-        </table>
-    </div>
+        </tr>
+        {{end}}
+    </table>
 </body>
 </html>
