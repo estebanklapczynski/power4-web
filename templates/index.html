@@ -2,19 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Power4 Web</title>
+    <title>Connect 4 Web</title>
     <style>
-        body { text-align: center; font-family: sans-serif; }
-        table { margin: auto; border-collapse: collapse; }
+        body { text-align: center; font-family: Arial, sans-serif; }
+        table { margin: auto; border-collapse: collapse; cursor: pointer; }
         td {
-            width: 60px; height: 60px;
-            border: 2px solid #333;
+            width: 70px;
+            height: 70px;
+            border: 3px solid #000000;
             border-radius: 50%;
-            text-align: center;
+            background-color: #e0e0e0;
         }
-        .p1 { background-color: red; }
-        .p2 { background-color: yellow; }
-        button { margin: 10px; padding: 10px 20px; }
+        .p1 { background-color: rgb(240, 25, 136); }
+        .p2 { background-color: rgb(6, 104, 12); }
+        h2 { margin: 20px; }
+        .board-container { display: inline-block; position: relative; }
+        .col-button {
+            position: absolute;
+            top: 0;
+            width: 70px;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .col-button:hover {
+            background: rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -29,20 +43,21 @@
         <h2>Tour du Joueur {{.CurrentPlayer}}</h2>
     {{end}}
 
-    <table>
-        {{range $i, $row := .Board}}
-        <tr>
-            {{range $j, $cell := $row}}
-                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}"></td>
+    <div class="board-container">
+        <table>
+            {{range $i, $row := .Board}}
+            <tr>
+                {{range $j, $cell := $row}}
+                    <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
+                        <form action="/play" method="post">
+                            <input type="hidden" name="column" value="{{$j}}">
+                            <button type="submit" class="col-button"></button>
+                        </form>
+                    </td>
+                {{end}}
+            </tr>
             {{end}}
-        </tr>
-        {{end}}
-    </table>
-
-    <form action="/play" method="post">
-        {{range $i, $_ := index .Board 0}}
-            <button type="submit" name="column" value="{{$i}}">Col {{$i}}</button>
-        {{end}}
-    </form>
+        </table>
+    </div>
 </body>
 </html>

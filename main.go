@@ -9,10 +9,10 @@ import (
 	"power4-web/game"
 )
 
-var new_game *game.Game
+var currentGame *game.Game
 
 func main() {
-	new_game = game.NewGame()
+	currentGame = game.NewGame()
 
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/play", handlePlay)
@@ -24,7 +24,7 @@ func main() {
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	tmpl.Execute(w, new_game)
+	tmpl.Execute(w, currentGame)
 }
 
 func handlePlay(w http.ResponseWriter, r *http.Request) {
@@ -32,13 +32,13 @@ func handlePlay(w http.ResponseWriter, r *http.Request) {
 		colStr := r.FormValue("column")
 		col, err := strconv.Atoi(colStr)
 		if err == nil {
-			new_game.PlayMove(col) // Correction ici
+			currentGame.PlayMove(col)
 		}
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func handleReset(w http.ResponseWriter, r *http.Request) {
-	new_game = game.NewGame() // Correction ici
+	currentGame = game.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
