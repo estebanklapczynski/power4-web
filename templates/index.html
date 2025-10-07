@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Power4 Web</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; }
+        table { margin: auto; border-collapse: collapse; }
+        td {
+            width: 60px; height: 60px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            text-align: center;
+        }
+        .p1 { background-color: red; }
+        .p2 { background-color: yellow; }
+        button { margin: 10px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>Puissance 4</h1>
+
+    {{if .Winner}}
+        <h2> Joueur {{.Winner}} a gagné !</h2>
+        <form action="/reset" method="post">
+            <button type="submit">Rejouer</button>
+        </form>
+    {{else}}
+        <h2>Tour du Joueur {{.CurrentPlayer}}</h2>
+    {{end}}
+
+    <table>
+        {{range $i, $row := .Board}}
+        <tr>
+            {{range $j, $cell := $row}}
+                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}"></td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+
+    <form action="/play" method="post">
+        {{range $i, $_ := index .Board 0}}
+            <button type="submit" name="column" value="{{$i}}">Col {{$i}}</button>
+        {{end}}
+    </form>
+</body>
+</html>
