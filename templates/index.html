@@ -26,7 +26,7 @@
         .p1 { background-color: red; }
         .p2 { background-color: yellow; }
 
-        /* Bouton invisible qui recouvre exactement chaque cellule */
+        
         form {
             margin: 0;
             padding: 0;
@@ -58,7 +58,7 @@
     <h1>Puissance 4</h1>
 
     {{if .Winner}}
-        <h2>🎉 Joueur {{.Winner}} a gagné !</h2>
+        <h2>🎉 Joueur {{.Winner}} a gagné ! YOU ARE THE BEST !</h2>
         <form action="/reset" method="post">
             <button type="submit">Rejouer</button>
         </form>
