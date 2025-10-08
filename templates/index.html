@@ -1,63 +1,90 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Styled Link as Button with Background Video</title>
-  <style>
-    /* --- STYLE DE LA VIDÉO DE FOND --- */
-    #background-video {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -1;
-      object-fit: cover;
-      filter: brightness(70%); /* légèrement assombrie pour bien lire le texte */
-    }
+    <meta charset="UTF-8">
+    <title>Puissance 4 Web</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url("/static/background.jpg");
+            background-size: cover;       
+            background-repeat: no-repeat; 
+            background-position: center;  
+            height: 100vh;                
+            margin: 0;
+        }
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            cursor: pointer;
+        }
+        td {
+            width: 70px;
+            height: 70px;
+            border: 3px solid #0d0d0d;
+            border-radius: 50%;
+            background-color: #f8f7f7;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        .p1 { background-color: rgb(169, 7, 7); }
+        .p2 { background-color: rgb(190, 221, 17); }
 
-    /* --- STYLE DU BOUTON --- */
-    .button-class {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 4px;
-      position: relative;
-      z-index: 1; /* pour que le bouton reste visible au-dessus de la vidéo */
-    }
+        
+        form {
+            margin: 0;
+            padding: 0;
+        }
+        .col-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .col-button:hover {
+            background: rgba(0,0,0,0.1);
+        }
 
-    /* --- CENTRAGE DU BOUTON --- */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: sans-serif;
-    }
-  </style>
+        button:focus {
+            outline: none;
+        }
+
+        h2 {
+            margin: 20px;
+        }
+    </style>
 </head>
-
 <body>
+    <h1>Puissance 4</h1>
 
-  <!-- Vidéo de fond -->
-  <video autoplay muted loop id="background-video">
-    <source src="placeholdervideo2.mp4" type="video/mp4">
-    Votre navigateur ne supporte pas la vidéo HTML5.
-  </video>
+    {{if .Winner}}
+        <h2>🎉 Joueur {{.Winner}} a gagné ! YOU ARE THE BEST !</h2>
+        <form action="/reset" method="post">
+            <button type="submit">Rejouer</button>
+        </form>
+    {{else}}
+        <h2>Tour du Joueur {{.CurrentPlayer}}</h2>
+    {{end}}
 
-  <!-- Bouton -->
-  <a href="Page2.html" class="button-class">Go to Another Page</a>
-
+    <table>
+        {{range $i, $row := .Board}}
+        <tr>
+            {{range $j, $cell := $row}}
+                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
+                    <form action="/play" method="post">
+                        <input type="hidden" name="column" value="{{$j}}">
+                        <button type="submit" class="col-button"></button>
+                    </form>
+                </td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
 </body>
+</html>
