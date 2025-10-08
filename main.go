@@ -24,7 +24,7 @@ func main() {
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl := template.Must(template.ParseFiles("templates/Page1.html"))
 	tmpl.Execute(w, currentGame)
 }
 
