@@ -1,64 +1,63 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Puissance 4 Web</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-image: url("/static/background.jpg");
-            background-size: cover;       
-            background-repeat: no-repeat; 
-            background-position: center;  
-            height: 100vh;                
-            margin: 0;
-        }
-        table {
-            margin: auto;
-            border-collapse: collapse;
-            cursor: pointer;
-        }
-        td {
-            width: 70px;
-            height: 70px;
-            border: 3px solid #0d0d0d;
-            border-radius: 50%;
-            background-color: #f8f7f7;
-            padding: 0;
-            margin: 0;
-            position: relative;
-        }
-        .p1 { background-color: rgb(169, 7, 7); }
-        .p2 { background-color: rgb(190, 221, 17); }
+  <meta charset="UTF-8">
+  <title>Styled Link as Button with Background Video</title>
+  <style>
+    /* --- STYLE DE LA VIDÉO DE FOND --- */
+    #background-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(70%); /* légèrement assombrie pour bien lire le texte */
+    }
 
-        
-        form {
-            margin: 0;
-            padding: 0;
-        }
-        .col-button {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-        }
-        .col-button:hover {
-            background: rgba(0,0,0,0.1);
-        }
+    /* --- STYLE DU BOUTON --- */
+    .button-class {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1; /* pour que le bouton reste visible au-dessus de la vidéo */
+    }
 
-        button:focus {
-            outline: none;
-        }
-
-        h2 {
-            margin: 20px;
-        }
-    </style>
+    /* --- CENTRAGE DU BOUTON --- */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Puissance 4</h1>
+
+  <!-- Vidéo de fond -->
+  <video autoplay muted loop id="background-video">
+    <source src="placeholdervideo2.mp4" type="video/mp4">
+    Votre navigateur ne supporte pas la vidéo HTML5.
+  </video>
+
+  <!-- Bouton -->
+  <a href="index.html" class="button-class">Go to Another Page</a>
+
+</body>
