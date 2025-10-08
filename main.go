@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
@@ -32,15 +31,8 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleGame(w http.ResponseWriter, r *http.Request) {
-	// Affiche currentGame en JSON lisible dans une balise <pre>
-	b, err := json.MarshalIndent(currentGame, "", "  ")
-	if err != nil {
-		http.Error(w, "Erreur serveur", http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	escaped := template.HTMLEscapeString(string(b))
-	_, _ = w.Write([]byte("<!doctype html><html><head><meta charset=\"utf-8\"><title>Game</title></head><body><h1>État du jeu</h1><pre>" + escaped + "</pre><p><a href=\"/\">Retour</a></p></body></html>"))
+	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	_ = tmpl.Execute(w, currentGame)
 }
 
 func handlePlay(w http.ResponseWriter, r *http.Request) {
@@ -51,7 +43,7 @@ func handlePlay(w http.ResponseWriter, r *http.Request) {
 			currentGame.PlayMove(col)
 		}
 	}
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/game", http.StatusSeeOther) // redirige maintenant vers la page du jeu
 }
 
 func handleReset(w http.ResponseWriter, r *http.Request) {
