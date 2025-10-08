@@ -43,3 +43,7 @@ func handleReset(w http.ResponseWriter, r *http.Request) {
 	currentGame = game.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+func handleRestart(w http.ResponseWriter, r *http.Request) {
+	currentGame = game.NewGame()
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
