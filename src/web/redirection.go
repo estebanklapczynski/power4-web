@@ -10,7 +10,7 @@ import (
 
 var currentGame *game.Game
 
-func init() {
+func SetupRoutes() {
 	currentGame = game.NewGame()
 
 	http.HandleFunc("/", handleIndex)
@@ -29,7 +29,7 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 
 func handleGame(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	_ = tmpl.Execute(w, currentGame)
+	tmpl.Execute(w, currentGame)
 }
 
 func handlePlay(w http.ResponseWriter, r *http.Request) {
