@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"power4-web/game"
+	"power4-web/src/game"
 )
 
 var currentGame *game.Game
 
-func main() {
+func init() {
 	currentGame = game.NewGame()
 
 	http.HandleFunc("/", handleIndex)
