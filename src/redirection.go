@@ -4,14 +4,12 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
-
-	"Power4-web/src"
 )
 
-var currentGame *src.Game
+var currentGame *Game
 
 func main() {
-	currentGame = src.NewGame()
+	currentGame = NewGame()
 
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/src", handleGame) // nouvelle route
@@ -44,10 +42,10 @@ func handlePlay(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleReset(w http.ResponseWriter, r *http.Request) {
-	currentGame = src.NewGame()
+	currentGame = NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 func handleRestart(w http.ResponseWriter, r *http.Request) {
-	currentGame = src.NewGame()
+	currentGame = NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
