@@ -1,4 +1,4 @@
-package src
+package game
 
 type Game struct {
 	Board         [][]int // 0 = vide, 1 = joueur1, 2 = joueur2
