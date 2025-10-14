@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+	"power4-web/src/web"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Bienvenue sur mon serveur Go !")
-	})
+	// Configure toutes les routes
+	web.SetupRoutes()
 
-	fmt.Println("Serveur démarré sur le port 8080...")
-	http.ListenAndServe(":8080", nil)
+	log.Println("Serveur lancé sur http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
