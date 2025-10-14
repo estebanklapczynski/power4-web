@@ -1,20 +1,20 @@
-package main
+package src
 
 import (
 	"html/template"
 	"net/http"
 	"strconv"
 
-	"power4-web/game"
+	"Power4-web/src"
 )
 
-var currentGame *game.Game
+var currentGame *src.Game
 
 func main() {
-	currentGame = game.NewGame()
+	currentGame = src.NewGame()
 
 	http.HandleFunc("/", handleIndex)
-	http.HandleFunc("/game.go", handleGame) // nouvelle route
+	http.HandleFunc("/src", handleGame) // nouvelle route
 	http.HandleFunc("/play", handlePlay)
 	http.HandleFunc("/reset", handleReset)
 	http.HandleFunc("/restart", handleRestart)
@@ -40,14 +40,14 @@ func handlePlay(w http.ResponseWriter, r *http.Request) {
 			currentGame.PlayMove(col)
 		}
 	}
-	http.Redirect(w, r, "/game.go", http.StatusSeeOther) // redirige maintenant vers la page du jeu
+	http.Redirect(w, r, "/src", http.StatusSeeOther) // redirige maintenant vers la page du jeu
 }
 
 func handleReset(w http.ResponseWriter, r *http.Request) {
-	currentGame = game.NewGame()
+	currentGame = src.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 func handleRestart(w http.ResponseWriter, r *http.Request) {
-	currentGame = game.NewGame()
+	currentGame = src.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
