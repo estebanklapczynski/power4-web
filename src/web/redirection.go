@@ -13,12 +13,18 @@ var currentGame *game.Game
 func init() {
 	currentGame = game.NewGame()
 
+	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/game", handleGame) // nouvelle route
 	http.HandleFunc("/play", handlePlay)
 	http.HandleFunc("/reset", handleReset)
 	http.HandleFunc("/restart", handleRestart)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
+}
+
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/Page1.html"))
+	tmpl.Execute(w, currentGame)
 }
 
 func handleGame(w http.ResponseWriter, r *http.Request) {
