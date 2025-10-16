@@ -72,19 +72,19 @@
         <h2>Tour du Joueur {{.CurrentPlayer}}</h2>
     {{end}}
 
-    <table>
-        {{range $i, $row := .Board}}
-        <tr>
-            {{range $j, $cell := $row}}
-                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
-                    <form action="/play" method="post">
-                        <input type="hidden" name="column" value="{{$j}}">
-                        <button type="submit" class="col-button"></button>
-                    </form>
-                </td>
-            {{end}}
-        </tr>
+    <table id="board">
+    {{range $i, $row := .Grid}}
+    <tr>
+        {{range $j, $cell := $row}}
+        <td class="cell {{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
+            <form action="/move" method="post">
+                <input type="hidden" name="col" value="{{$j}}">
+                <button class="col-button" type="submit" aria-label="Colonne {{$j}}"></button>
+            </form>
+        </td>
         {{end}}
+    </tr>
+    {{end}}
     </table>
 </body>
 </html>
